@@ -1,6 +1,10 @@
 # base-model
 
 <pre>
+var BaseModel = require('./src/model');
+
+// example #1
+// inherit BaseModel
 var Model = function() {
 	BaseModel.call(this);
 
@@ -10,24 +14,39 @@ var Model = function() {
 Model.prototype = Object.create(BaseModel.prototype);
 Model.prototype.constructor = Model;
 
-try {
-	var modelA = new Model();
-	console.log('model property:', Object.keys(modelA));
+var modelA = new Model();
+console.log('model property:', Object.keys(modelA));
 
-	modelA.setValue({name: 'the name', address: 'the address'});
-	console.log('model value:', modelA.value);
+modelA.setValue({name: 'the name', address: 'the address'});
+console.log('model value:', modelA.value);
 
 
-	var modelB = new Model();
-	modelB.setName('the name');
-	modelB.setAddress('the address');
+// example #2
+var userModel = new BaseModel();
+userModel.register("name", "address");
 
-	console.log('call function getName:', modelB.getName());
-	console.log('call property address:', modelB.address);
+userModel.setName("username");
+userModel.setAddress("user address");
 
-	console.log('call toString', modelB.toString());
+console.log(userModel.getName());
+console.log(userModel.getAddress());
 
-} catch(e) {
-	console.log(e.name, e.message);
-}
 </pre>
+
+# method
+void <b>register(String, [String, [String, ...]])</b>
+<br />register properties
+
+String <b>toString()</b>
+<br />get object as string (JSON.stringify)
+
+void <b>setValue(Object)</b>
+<br />set value of object
+
+void <b>clear()</b>
+<br />clear value all registered property
+
+# property
+Object <b>value</b>
+<br />get value of object
+
