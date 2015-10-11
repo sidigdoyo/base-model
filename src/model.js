@@ -11,9 +11,7 @@
 	"use strict";
 	if(typeof define === "function" && define.amd) {
 		// Define as an AMD module if possible
-		define(["baseModel"], function(baseModel){
-			return (root.BaseModel = factory(baseModel));
-		});
+		define( 'BaseModel', [], (root.BaseModel = factory(root.baseModel)) );
 	}
 	else if(typeof module === "object" && module.exports) {
 		// Node/CommonJS
@@ -24,6 +22,8 @@
 	}
 }
 (this, function(baseModel) {
+	"use strict";
+	
 	var BaseModel = function() {};
 
 	var __private = {};
