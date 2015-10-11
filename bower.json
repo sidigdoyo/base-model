@@ -6,7 +6,7 @@
     "Sidigdoyo Pribadi <sidigdoyo@gmail.com>"
   ],
   "description": "base model library",
-  "main": "./src/model.js",
+  "main": "./src/msp.base-model.js",
   "moduleType": [],
   "keywords": [
     "model",
