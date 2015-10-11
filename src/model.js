@@ -11,7 +11,7 @@
 	"use strict";
 	if(typeof define === "function" && define.amd) {
 		// Define as an AMD module if possible
-		define('BaseModel', ["baseModel"], function(baseModel){
+		define(["baseModel"], function(baseModel){
 			return (root.BaseModel = factory(baseModel));
 		});
 	}
