@@ -1,0 +1,25 @@
+{
+  "name": "base-model",
+  "version": "1.0.0",
+  "homepage": "https://github.com/sidigdoyo/base-model",
+  "authors": [
+    "Sidigdoyo Pribadi <sidigdoyo@gmail.com>"
+  ],
+  "description": "base model library",
+  "main": "./src/model.js",
+  "moduleType": [],
+  "keywords": [
+    "model",
+    "generic",
+    "getter",
+    "setter"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
