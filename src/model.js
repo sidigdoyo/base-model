@@ -9,21 +9,25 @@
 
 (function( root, factory ) {
 	"use strict";
+	if(!root.msp) {
+		root.msp = {};
+	}
+
 	if(typeof define === "function" && define.amd) {
 		// Define as an AMD module if possible
-		define( 'BaseModel', [], (root.BaseModel = factory(root.baseModel)) );
+		define( 'msp.BaseModel', [], ( root.msp.BaseModel = factory() ) );
 	}
 	else if(typeof module === "object" && module.exports) {
 		// Node/CommonJS
-		module.exports = (root.BaseModel = factory(root.baseModel));
+		module.exports = (root.msp.BaseModel = factory());
 	}
 	else {
-		root.BaseModel = factory(root.baseModel);
+		root.msp.BaseModel = factory();
 	}
 }
-(this, function(baseModel) {
+(this, function() {
 	"use strict";
-	
+
 	var BaseModel = function() {};
 
 	var __private = {};
@@ -49,6 +53,17 @@
 		return new Function("__private", "return function(value) { __private."+ prop +" = value; }")(obj);
 	};
 
+	var __defineProperty = function(self, obj) {
+
+		var __config = { 
+			enumerable: obj.enumerable, 
+			get: __propertyGetter(__private, obj.name), 
+			set: __propertySetter(__private, obj.name) 
+		};
+
+		Object.defineProperty(self, obj.name, __config);
+	};
+
 	BaseModel.prototype = {
 		constructor: BaseModel,
 		register: function() {
@@ -56,17 +71,29 @@
 			var self = this;
 
 			for(var i=0; i<args.length; i++) {
-				var __funcGetName = __getFunctionName(args[i], "get");
-				var __funcSetName = __getFunctionName(args[i], "set");
+				var __prop = args[i];
+				if(typeof __prop === 'string') {
+					__prop = {
+						name: args[i],
+						enumerable: true
+					};
+				} 
 
-				__private[args[i]] = undefined;
+				if(Array.isArray(__prop) || typeof __prop === 'number') {
+					throw new TypeError();
+				}
 
-				Object.defineProperty(self, args[i], { enumerable: true, get: __propertyGetter(__private, args[i]), set: __propertySetter(__private, args[i]) });
+				var __funcGetName = __getFunctionName(__prop.name, "get");
+				var __funcSetName = __getFunctionName(__prop.name, "set");
 
-				Object.defineProperty(self, __funcGetName, { enumerable: false, value: __functionGet(__private, args[i], __funcGetName) } );
-				Object.defineProperty(self, __funcSetName, { enumerable: false, value: __functionSet(__private, args[i], __funcSetName) } );
+				__private[__prop.name] = undefined;
+				
+				__defineProperty(self, __prop);
 
-				Object.call(__functionSet(args[i]));
+				Object.defineProperty(self, __funcGetName, { enumerable: false, value: __functionGet(__private, __prop.name, __funcGetName) } );
+				Object.defineProperty(self, __funcSetName, { enumerable: false, value: __functionSet(__private, __prop.name, __funcSetName) } );
+
+				Object.call(__functionSet(__prop.name));
 			}
 		},
 		setValue: function(obj) {
@@ -86,6 +113,8 @@
 			return JSON.stringify(this);
 		}
 	};
+
+	// console.log(angular)
 	
 	return BaseModel;
 }));
