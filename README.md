@@ -1,5 +1,6 @@
 # base-model
 
+<pre>
 var Model = function() {
 	BaseModel.call(this);
 
@@ -29,3 +30,4 @@ try {
 } catch(e) {
 	console.log(e.name, e.message);
 }
+</pre>
