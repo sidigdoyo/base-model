@@ -2,7 +2,7 @@
  * BaseModel - Library
  * automatic getter and setter function base on registered propery
  * @version v1.0.0
- * @link https://github.com/sidigdoyo/BaseModel
+ * @link https://github.com/sidigdoyo/base-model
  * @license MIT
  * @author Sidigdoyo Pribadi <sidigdoyo@gmail.com>
  */
